@@ -15,7 +15,7 @@ COPY ./etc-pki-entitlement /etc/pki/entitlement
 # Delete /etc/rhsm-host to use entitlements from the build container
 RUN rm /etc/rhsm-host && rm /etc/pki/entitlement-host 
 RUN yum repolist --verbose && cat /etc/redhat-release && cat /etc/yum.repos.d/redhat.repo && yum repolist
-RUN cat /etc/pki/entitlement && subscription-manager repos 
+RUN ls /etc/pki/entitlement/ && subscription-manager repos 
 
 
 ### Disable RHEL7 repositories 
