@@ -1,14 +1,13 @@
-FROM registry.redhat.io/openshift4/ose-jenkins-agent-base:v4.6
+FROM registry.redhat.io/jboss-webserver-3/webserver31-tomcat8-openshift@sha256:b22c3fea4374e776366d2363184a854b8ba47539df0d02b6907f1e7816d4587f
 
 USER root
 
 # Copy entitlements
 RUN sleep 5  
 COPY ./etc-pki-entitlement /etc/pki/entitlement
-COPY ./yum.repos.d /etc/yum.repos.d
 
 # Disabling subscription manager plugin in yum since using Satellite 
-RUN sed -i".org" -e "s#^enabled=1#enabled=0#g" /etc/yum/pluginconf.d/subscription-manager.conf 
+#RUN sed -i".org" -e "s#^enabled=1#enabled=0#g" /etc/yum/pluginconf.d/subscription-manager.conf 
 
 # yum repository info provided by Satellite
 
@@ -19,9 +18,7 @@ RUN yum repolist --verbose && cat /etc/redhat-release && cat /etc/yum.repos.d/re
 
 
 ### Disable RHEL7 repositories 
-RUN yum -y install --disablerepo='rhel-7*' vulkan redhat-lsb libXScrnSaver \
-&& curl -o google-chrome-stable_current_x86_64.rpm https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm \
-&& yum -y localinstall google-chrome-stable_current_x86_64.rpm 
+RUN yum -y install --enablerepo='rhel-7-server-rpms' krb5-workstation 
 
 # Remove entitlements
 rm -rf /etc/pki/entitlement
