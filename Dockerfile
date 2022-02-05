@@ -16,16 +16,17 @@ COPY ./etc-pki-entitlement /etc/pki/entitlement
 #RUN rm /etc/rhsm-host && rm /etc/pki/entitlement-host 
 
 # RUN yum repolist -v && subscription-manager repos --enable rhel-7-server-rpms   
+RUN microdnf install  tcpdump traceroute telnet iputils-ping snmp openssh-server  -y
 
-RUN  yum repolist -v  && yum install  tcpdump traceroute telnet iputils-ping snmp openssh-server -y
+# RUN  yum repolist -v  && yum install  tcpdump traceroute telnet iputils-ping snmp openssh-server -y
 
 
-RUN ls /etc/pki/entitlement/single && subscription-manager repos 
+# RUN ls /etc/pki/entitlement/single && subscription-manager repos 
 
-RUN yum -y --disablerepo="*" --enablerepo=rhel-7-server-rpms     install krb5-workstation
+# RUN yum -y --disablerepo="*" --enablerepo=rhel-7-server-rpms     install krb5-workstation
 
 ### Disable RHEL7 repositories 
-RUN yum -y install --enablerepo='rhel-7-server-rpms' krb5-workstation 
+# RUN yum -y install --enablerepo='rhel-7-server-rpms' krb5-workstation 
 
 # Remove entitlements
 rm -rf /etc/pki/entitlement
