@@ -1,4 +1,5 @@
-FROM registry.redhat.io/jboss-webserver-3/webserver31-tomcat8-openshift@sha256:b22c3fea4374e776366d2363184a854b8ba47539df0d02b6907f1e7816d4587f
+#FROM registry.redhat.io/jboss-webserver-3/webserver31-tomcat8-openshift@sha256:b22c3fea4374e776366d2363184a854b8ba47539df0d02b6907f1e7816d4587f
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 
 USER root
 
@@ -9,12 +10,12 @@ COPY ./yum.repos.d /etc/yum.repos.d
 # Disabling subscription manager plugin in yum since using Satellite 
 #RUN sed -i".org" -e "s#^enabled=1#enabled=0#g" /etc/yum/pluginconf.d/subscription-manager.conf 
 
-# yum repository info provided by Satellite
-
 
 # Delete /etc/rhsm-host to use entitlements from the build container
 RUN rm /etc/rhsm-host && rm /etc/pki/entitlement-host 
-RUN yum repolist -v && subscription-manager repos --enable rhel-7-server-rpms &&     yum -y install krb5-workstation  
+RUN microdnf install  tcpdump traceroute telnet iputils-ping snmp openssh-server -y
+
+RUN yum repolist -v && subscription-manager repos --enable rhel-7-server-rpms &&    
 
 RUN ls /etc/pki/entitlement/single && subscription-manager repos 
 
