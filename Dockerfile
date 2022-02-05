@@ -1,5 +1,6 @@
 #FROM registry.redhat.io/jboss-webserver-3/webserver31-tomcat8-openshift@sha256:b22c3fea4374e776366d2363184a854b8ba47539df0d02b6907f1e7816d4587f
-FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+#FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+FROM registry.access.redhat.com/ubi8/ubi:8.2
 
 USER root
 
