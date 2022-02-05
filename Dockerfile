@@ -14,9 +14,11 @@ COPY ./yum.repos.d /etc/yum.repos.d
 
 # Delete /etc/rhsm-host to use entitlements from the build container
 RUN rm /etc/rhsm-host && rm /etc/pki/entitlement-host 
-RUN microdnf install  tcpdump traceroute telnet iputils-ping snmp openssh-server -y
 
 RUN yum repolist -v && subscription-manager repos --enable rhel-7-server-rpms &&    
+
+RUN yum install  tcpdump traceroute telnet iputils-ping snmp openssh-server -y
+
 
 RUN ls /etc/pki/entitlement/single && subscription-manager repos 
 
